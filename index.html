@@ -28,7 +28,16 @@
   <div class="d-flex w-100 h-100 p-3 mx-auto flex-column container">
     <h1 class="text-center">🥢🥢🥢🥢🥢</h1>
     <pre id="console" class="text-left rounded-3 flex-grow-1 text-light border border-secondary my-2 p-3"></pre>
-    <input type="text" class="form-control" placeholder="Your command">
+    <div>
+      Enter your move: <code>(source | number_of_fingers) > number_of_fingers</code>.
+      Source = <code>ml</code> or <code>mr</code>; dest = <code>yl</code> or <code>yr</code>.
+      Examples:
+      <ul>
+        <li>To split 2 fingers from your left hand to your right hand: <code>2 > mr</code></li>
+        <li>To use your left hand to tap their right hand: <code>ml > yr</code></li>
+      </ul>
+    </div>
+    <input id="command" type="text" class="form-control" placeholder="Your command">
   </div>
 </body>
 
