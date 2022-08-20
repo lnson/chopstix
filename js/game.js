@@ -64,7 +64,8 @@ class HumanPlayer extends Player {
             }
             if (components[1] === 'yl') {
                 return new Move(this.left, 0);
-            } else if (components[1] === 'yr') {
+            }
+            if (components[1] === 'yr') {
                 return new Move(0, this.left);
             }
             throw new Error(`Unrecognized destination of the tap: '${components[1]}'. Must be yl or yr.`);
@@ -74,7 +75,8 @@ class HumanPlayer extends Player {
             }
             if (components[1] === 'yl') {
                 return new Move(this.right, 0);
-            } else if (components[1] === 'yr') {
+            }
+            if (components[1] === 'yr') {
                 return new Move(0, this.right);
             }
             throw new Error(`Unrecognized destination of the tap: '${components[1]}'. Must be yl or yr.`);
@@ -88,20 +90,28 @@ class HumanPlayer extends Player {
         }
 
         if (components[1] === 'ml') {
-            if (numFingersSplit >= this.right) {
-                if (this.right <= 1) {
-                    throw new Error('Too few fingers on right hand to split.');
-                }
-                throw new Error(`Number of finger to split to left hand must be between 1 and ${this.right - 1}.`);
+            if (this.right <= 1) {
+                throw new Error('Too few fingers on right hand to split.');
+            }
+            if (this.left === NUM_FINGERS - 1) {
+                throw new Error('Left hand has no room left.');
+            }
+            const maxSplittableFingers = Math.min(NUM_FINGERS - this.left, this.right) - 1;
+            if (numFingersSplit > maxSplittableFingers) {
+                throw new Error(`Number of fingers to split must be between 1 and ${maxSplittableFingers}.`);
             }
             this.AcceptDamage(new Move(numFingersSplit, -numFingersSplit));
             return new Move(0, 0);
         } else if (components[1] === 'mr') {
-            if (numFingersSplit >= this.left) {
-                if (this.right <= 1) {
-                    throw new Error('Too few fingers on left hand to split.');
-                }
-                throw new Error(`Number of fingers to split to right hand must be between 1 and ${this.left - 1}.`);
+            if (this.right <= 1) {
+                throw new Error('Too few fingers on left hand to split.');
+            }
+            if (this.right === NUM_FINGERS - 1) {
+                throw new Error('Right hand has no room left.');
+            }
+            const maxSplittableFingers = Math.min(NUM_FINGERS - this.right, this.left) - 1;
+            if (numFingersSplit > maxSplittableFingers) {
+                throw new Error(`Number of fingers to split must be between 1 and ${maxSplittableFingers}.`);
             }
             this.AcceptDamage(new Move(-numFingersSplit, numFingersSplit));
             return new Move(0, 0);
